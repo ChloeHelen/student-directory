@@ -23,11 +23,10 @@ def print_header
 end
 
 def print(students)
-    students.each do |student|
-        #only print students whose names are shorter than 12 characters
-        if student[:name].length < 12
-            puts "#{student[:name]} (#{student[:cohort]} cohort)"
-        end
+    index = 0
+    while index < students.length
+        puts "#{students[index][:name]} (#{students[index][:cohort]} cohort)"
+        index += 1 
     end
 end
 
