@@ -24,8 +24,8 @@ end
 
 def print(students)
     students.each do |student|
-        #only print students whose name starts with C
-        if student[:name].start_with?("C")
+        #only print students whose names are shorter than 12 characters
+        if student[:name].length < 12
             puts "#{student[:name]} (#{student[:cohort]} cohort)"
         end
     end
