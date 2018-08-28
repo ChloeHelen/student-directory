@@ -57,7 +57,7 @@ def print_by_cohorts(students)
         puts month
         puts "-------"
         puts "Name".ljust(15) + "Hobby".ljust(15) + "Nationality".ljust(20) + "Colour".ljust(15)
-        puts "--------------------------------------------------------------------------------"
+        puts "--------------------------------------------------------------------"
         students.each do |student|
             if student[:cohort] == month
                 puts "#{student[:name]}".ljust(15) + "#{student[:hobby]}".ljust(15) + "#{student[:nationality]}".ljust(20) + "#{student[:colour]}".ljust(15)
@@ -76,6 +76,8 @@ def print_footer(names)
 end
 
 students = input_students
-print_header
-print_by_cohorts(students)
-print_footer(students)
+if students.count > 0
+    print_header
+    print_by_cohorts(students)
+    print_footer(students)
+end
