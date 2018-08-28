@@ -21,11 +21,11 @@ def input_students
             cohort = gets.chomp
         end
         puts "What is #{name}'s favourite hobby?"
-        hobby = gets.chomp.downcase
+        hobby = gets.chomp.capitalize
         puts "What's their nationality?"
         nationality = gets.chomp.capitalize
         puts "What's their favourite colour?"
-        colour = gets.chomp.downcase
+        colour = gets.chomp.capitalize
         #add the student hash to the array
         students << {name: name, cohort: cohort.to_sym, hobby: hobby, nationality: nationality, colour: colour}
         puts "Now we have #{students.count} students"
@@ -43,8 +43,10 @@ def print_header
 end
 
 def print(students)
+    puts "Name".ljust(15) + "Cohort".ljust(15) + "Hobby".ljust(15) + "Nationality".ljust(15) + "Colour".ljust(15)
+    puts "--------------------------------------------------------------------------------"
     students.each do |student|
-            puts "#{student[:name]} (#{student[:cohort]} cohort). They like #{student[:hobby]}, they're #{student[:nationality]} and their favourite colour is #{student[:colour]}."
+            puts "#{student[:name]}".ljust(15) + "#{student[:cohort]} cohort".ljust(15) + "#{student[:hobby]}".ljust(15) + "#{student[:nationality]}".ljust(15) + "#{student[:colour]}".ljust(15)
     end
 end
 
