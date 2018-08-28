@@ -43,10 +43,27 @@ def print_header
 end
 
 def print(students)
-    puts "Name".ljust(15) + "Cohort".ljust(15) + "Hobby".ljust(15) + "Nationality".ljust(15) + "Colour".ljust(15)
+    puts "Name".ljust(15) + "Cohort".ljust(20) + "Hobby".ljust(15) + "Nationality".ljust(20) + "Colour".ljust(15)
     puts "--------------------------------------------------------------------------------"
     students.each do |student|
-            puts "#{student[:name]}".ljust(15) + "#{student[:cohort]} cohort".ljust(15) + "#{student[:hobby]}".ljust(15) + "#{student[:nationality]}".ljust(15) + "#{student[:colour]}".ljust(15)
+            puts "#{student[:name]}".ljust(15) + "#{student[:cohort]} cohort".ljust(20) + "#{student[:hobby]}".ljust(15) + "#{student[:nationality]}".ljust(20) + "#{student[:colour]}".ljust(15)
+    end
+end
+
+def print_by_cohorts(students)
+    cohorts = students.map { |student| student[:cohort] }
+    
+    cohorts.uniq.each do |month|
+        puts month
+        puts "-------"
+        puts "Name".ljust(15) + "Hobby".ljust(15) + "Nationality".ljust(20) + "Colour".ljust(15)
+        puts "--------------------------------------------------------------------------------"
+        students.each do |student|
+            if student[:cohort] == month
+                puts "#{student[:name]}".ljust(15) + "#{student[:hobby]}".ljust(15) + "#{student[:nationality]}".ljust(20) + "#{student[:colour]}".ljust(15)
+            end
+        end
+        puts "\n"
     end
 end
 
@@ -56,5 +73,5 @@ end
 
 students = input_students
 print_header
-print(students)
+print_by_cohorts(students)
 print_footer(students)
