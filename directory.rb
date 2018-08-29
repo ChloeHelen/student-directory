@@ -121,25 +121,25 @@ end
 def save_students
     puts "What file do you want to save to?"
     filename = gets.chomp
-    file = File.open(filename, "w")
-    @students.each do |student|
-        student_data = [student[:name], student[:cohort], student[:hobby], student[:nationality], student[:colour]]
-        csv_line = student_data.join(",")
-        file.puts csv_line
+    File.open(filename, "w") do |f|
+        @students.each do |student|
+            student_data = [student[:name], student[:cohort], student[:hobby], student[:nationality], student[:colour]]
+            csv_line = student_data.join(",")
+            f.puts csv_line
+        end
     end
-    file.close
     puts "#{@students.count} students have been saved to #{filename}\n\n"
 end
 
 def load_students
     puts "What file do you want to load from?"
     filename = gets.chomp
-    file = File.open(filename, "r")
-    file.readlines.each do |line|
-        name, cohort, hobby, nationality, colour = line.chomp.split(',')
-        students_hash(name, cohort, hobby, nationality, colour)
+    File.open(filename, "r") do |f|
+        f.readlines.each do |line|
+            name, cohort, hobby, nationality, colour = line.chomp.split(',')
+            students_hash(name, cohort, hobby, nationality, colour)
+        end
     end
-    file.close
     puts "Loaded #{@students.count} from #{filename}\n\n"
 end
 
