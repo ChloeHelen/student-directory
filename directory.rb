@@ -126,6 +126,7 @@ def save_students
         file.puts csv_line
     end
     file.close
+    puts "The students have been saved to students.csv"
 end
 
 def load_students(filename = "students.csv")
