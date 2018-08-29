@@ -2,14 +2,32 @@ require 'date'
 @students = []
 
 def input_students
-    puts "Please enter the names of the students followed by their information"
-    puts "To finish, just hit return twice"
+    #print instructions
+    input_students_header
     #get the first name
-    name = STDIN.gets.chomp.capitalize
+    name = get_user_input
     #while the name is not empty, repeat this code
     while !name.empty? do
-        puts "What cohort is #{name} a part of?"
-        cohort = STDIN.gets.strip.downcase.capitalize
+        #get student's info
+        cohort = get_cohort(name)
+        puts "What is #{name}'s favourite hobby?"
+        hobby = get_user_input
+        puts "What's their nationality?"
+        nationality = get_user_input
+        puts "What's their favourite colour?"
+        colour = get_user_input
+        #add the student hash to the array
+        students_hash(name, cohort, hobby, nationality, colour)
+        #print total and ask for next student
+        input_students_footer
+        #get the next name
+        name = get_user_input
+    end
+end
+
+def get_cohort(name)
+    puts "What cohort is #{name} a part of?"
+        cohort = get_user_input
         #If cohort is left empty it is assigned a standard value
         if cohort.empty?
             cohort = "August"
@@ -17,21 +35,24 @@ def input_students
         #Uses date library to check whether the cohort entered is a valid month
         while !Date::MONTHNAMES.include?(cohort)
             puts "Invalid input, please enter a month. e.g. 'January'or 'February'"
-            cohort = STDIN.gets.strip
+            cohort = get_user_input
         end
-        puts "What is #{name}'s favourite hobby?"
-        hobby = STDIN.gets.strip.capitalize
-        puts "What's their nationality?"
-        nationality = STDIN.gets.strip.capitalize
-        puts "What's their favourite colour?"
-        colour = STDIN.gets.strip.capitalize
-        #add the student hash to the array
-        students_hash(name, cohort, hobby, nationality, colour)
-        puts "Now we have #{@students.count} students"
-        #get another name from the user
-        puts "Enter another student's name or press return to exit"
-        name = STDIN.gets.strip.capitalize
-    end
+    cohort
+end
+
+def get_user_input
+    STDIN.gets.strip.downcase.capitalize
+end
+
+def input_students_header
+    puts "Please enter the names of the students followed by their information"
+    puts "To finish, just hit return twice"
+end
+
+def input_students_footer
+    puts "Now we have #{@students.count} students"
+    #get another name from the user
+    puts "Enter another student's name or press return to exit"
 end
 
 def print_header
@@ -39,9 +60,13 @@ def print_header
     puts "-------------"
 end
 
-def print_students_list
+def table_header
     puts "Name".ljust(15) + "Cohort".ljust(20) + "Hobby".ljust(15) + "Nationality".ljust(20) + "Colour".ljust(15)
     puts "--------------------------------------------------------------------------------"
+end
+
+def print_students_list
+    table_header
     @students.each do |student|
             puts "#{student[:name]}".ljust(15) + "#{student[:cohort]} cohort".ljust(20) + "#{student[:hobby]}".ljust(15) + "#{student[:nationality]}".ljust(20) + "#{student[:colour]}".ljust(15)
     end
