@@ -1,4 +1,5 @@
 require 'date'
+require "csv"
 @students = []
 
 def input_students
@@ -121,11 +122,10 @@ end
 def save_students
     puts "What file do you want to save to?"
     filename = gets.chomp
-    File.open(filename, "w") do |f|
+    CSV.open(filename, "wb") do |csv|
         @students.each do |student|
             student_data = [student[:name], student[:cohort], student[:hobby], student[:nationality], student[:colour]]
-            csv_line = student_data.join(",")
-            f.puts csv_line
+            csv << student_data
         end
     end
     puts "#{@students.count} students have been saved to #{filename}\n\n"
@@ -134,11 +134,9 @@ end
 def load_students
     puts "What file do you want to load from?"
     filename = gets.chomp
-    File.open(filename, "r") do |f|
-        f.readlines.each do |line|
-            name, cohort, hobby, nationality, colour = line.chomp.split(',')
-            students_hash(name, cohort, hobby, nationality, colour)
-        end
+    CSV.foreach(filename) do |row|
+        name, cohort, hobby, nationality, colour = row
+        students_hash(name, cohort, hobby, nationality, colour)
     end
     puts "Loaded #{@students.count} from #{filename}\n\n"
 end
