@@ -83,8 +83,8 @@ end
 def print_menu
         puts "1. Input the students"
         puts "2. Show the students"
-        puts "3. Save the list to students.csv"
-        puts "4. Load the list from students.csv"
+        puts "3. Save students to a file"
+        puts "4. Load students from a file"
         puts "9. Exit"
 end
 
@@ -119,42 +119,46 @@ def interactive_menu
 end
 
 def save_students
-    file = File.open("students.csv", "w")
+    puts "What file do you want to save to?"
+    filename = gets.chomp
+    file = File.open(filename, "w")
     @students.each do |student|
         student_data = [student[:name], student[:cohort], student[:hobby], student[:nationality], student[:colour]]
         csv_line = student_data.join(",")
         file.puts csv_line
     end
     file.close
-    puts "The students have been saved to students.csv"
+    puts "#{@students.count} students have been saved to #{filename}\n\n"
 end
 
-def load_students(filename = "students.csv")
+def load_students
+    puts "What file do you want to load from?"
+    filename = gets.chomp
     file = File.open(filename, "r")
     file.readlines.each do |line|
         name, cohort, hobby, nationality, colour = line.chomp.split(',')
         students_hash(name, cohort, hobby, nationality, colour)
     end
     file.close
+    puts "Loaded #{@students.count} from #{filename}\n\n"
 end
 
-def try_load_students
-   filename = ARGV.first
-    if filename.nil?
-        load_students
-        puts "Loaded #{@students.count} from students.csv\n\n"
-    elsif File.exists?(filename)
-       load_students(filename)
-        puts "Loaded #{@students.count} from #{filename}"
-    else
-        puts "Sorry, #{filename} doesn't exist."
-        exit
-    end
-end
+# def try_load_students
+#   filename = ARGV.first
+#     if filename.nil?
+#         load_students
+#         puts "Loaded #{@students.count} from students.csv\n\n"
+#     elsif File.exists?(filename)
+#       load_students(filename)
+#         puts "Loaded #{@students.count} from #{filename}"
+#     else
+#         puts "Sorry, #{filename} doesn't exist."
+#         exit
+#     end
+# end
 
 def students_hash(name, cohort, hobby, nationality, colour)
     @students << {name: name, cohort: cohort.to_sym, hobby: hobby, nationality: nationality, colour: colour}
 end
     
-try_load_students
 interactive_menu
