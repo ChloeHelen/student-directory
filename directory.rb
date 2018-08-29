@@ -26,7 +26,7 @@ def input_students
         puts "What's their favourite colour?"
         colour = STDIN.gets.strip.capitalize
         #add the student hash to the array
-        @students << {name: name, cohort: cohort.to_sym, hobby: hobby, nationality: nationality, colour: colour}
+        students_hash(name, cohort, hobby, nationality, colour)
         puts "Now we have #{@students.count} students"
         #get another name from the user
         puts "Enter another student's name or press return to exit"
@@ -107,7 +107,7 @@ def load_students(filename = "students.csv")
     file = File.open(filename, "r")
     file.readlines.each do |line|
         name, cohort, hobby, nationality, colour = line.chomp.split(',')
-        @students << {name: name, cohort: cohort.to_sym, hobby: hobby, nationality: nationality, colour: colour}
+        students_hash(name, cohort, hobby, nationality, colour)
     end
     file.close
 end
@@ -122,6 +122,10 @@ def try_load_students
         puts "Sorry, #{filename} doesn't exist."
         exit
     end
+end
+
+def students_hash(name, cohort, hobby, nationality, colour)
+    @students << {name: name, cohort: cohort.to_sym, hobby: hobby, nationality: nationality, colour: colour}
 end
     
 try_load_students
